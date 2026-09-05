@@ -19,6 +19,9 @@ all: $(SRC)
 flex: $(LEX)
 	$(FLX) -o $(LEX_OUT) $(LEX)
 
+bison: $(PAR)
+	$(BIS) -d -o $(PAR_OUT) $(PAR)
+
 run:
 	$(OUT)
 
