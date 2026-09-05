@@ -72,8 +72,10 @@
 #include <stdio.h>
 int yylex(void);
 void yyerror(const char* s);
+extern char *yytext;
+extern int yylineno;
 
-#line 77 "src/parser.c"
+#line 79 "src/parser.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -506,7 +508,7 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    29,    29,    31,    32,    34,    37
+       0,    31,    31,    33,    34,    36,    39
 };
 #endif
 
@@ -1340,23 +1342,23 @@ yyreduce:
   switch (yyn)
     {
   case 5: /* function: "'code entry'" "'void'" "'identifier'" "'('" "')'" "'{'" "'}'"  */
-#line 34 "src/parser.y"
+#line 36 "src/parser.y"
                                                                                    {
                 printf("An entry function: '%s'\n", (yyvsp[-4].str));
             }
-#line 1348 "src/parser.c"
+#line 1350 "src/parser.c"
     break;
 
   case 6: /* function: "'void'" "'identifier'" "'('" "')'" "'{'" "'}'"  */
-#line 37 "src/parser.y"
+#line 39 "src/parser.y"
                                                                          {
                 printf("A void function: '%s'\n", (yyvsp[-4].str));
             }
-#line 1356 "src/parser.c"
+#line 1358 "src/parser.c"
     break;
 
 
-#line 1360 "src/parser.c"
+#line 1362 "src/parser.c"
 
       default: break;
     }
@@ -1580,16 +1582,16 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 41 "src/parser.y"
+#line 43 "src/parser.y"
 
 
 extern FILE *yyin;
 
 int main(int ac, char **av)
 {
-    if (av > 1)
+    if (ac > 1)
     {
-        FILE *file = fopen(av[1]);
+        FILE *file = fopen(av[1], "r");
         if (!file) { perror(av[1]); return 1; }
         yyin = file;
     }

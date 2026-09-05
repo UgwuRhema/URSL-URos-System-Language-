@@ -22,6 +22,8 @@ flex: $(LEX)
 bison: $(PAR)
 	$(BIS) -d -o $(PAR_OUT) $(PAR)
 
+fbin: $(PAR_OUT) $(LEX_OUT)
+	$(C) $(CFLAGS) $(PAR_OUT) $(LEX_OUT) -o $(OUT) -lfl
 run:
 	$(OUT)
 
