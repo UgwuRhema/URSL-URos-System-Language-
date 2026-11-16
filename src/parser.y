@@ -23,6 +23,14 @@ extern int yylineno;
 %token TOK_SEMICOLON "';'"
 %token TOK_ASSIGN "'='"
 %token TOK_COLON  "':'"
+%token TOK_U64 "'u64'"
+%token TOK_I64 "'i64'"
+%token TOK_U32 "'u32'"
+%token TOK_I32 "'i32'"
+%token TOK_U16 "'u16'"
+%token TOK_I16 "'i16'"
+%token TOK_U8 "'u8'"
+%token TOK_i8 "'i8'"
 
 %%
 
@@ -50,7 +58,7 @@ member_list: member_decl
 		   | member_list member_decl
 		   ;
 
-member_decl: 
+member_decl: TOK_U64 TOK_IDENT TOK_SEMICOLON { printf("Member decl"); }
 
 %%
 
