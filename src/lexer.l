@@ -36,6 +36,7 @@
 ")" { return TOK_RPAREN; }
 ";" { return TOK_SEMICOLON; }
 "=" { return TOK_ASSIGN; }
+"*" { return TOK_ASTERISK; }
 ":" { return TOK_COLON; }
 [ \t\r\n]+ { /* skip whitespace */ }
 "//".* { /* skip single line comments */ }

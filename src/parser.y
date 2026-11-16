@@ -22,6 +22,7 @@ extern int yylineno;
 %token TOK_RPAREN "')'"
 %token TOK_SEMICOLON "';'"
 %token TOK_ASSIGN "'='"
+%token TOK_ASTERISK "'*'"
 %token TOK_COLON  "':'"
 %token TOK_U64 "'u64'"
 %token TOK_I64 "'i64'"
@@ -46,7 +47,7 @@ metadata_defn_list: %empty
 
 /*struct defn nonterminal*/
 struct_defn: TOK_STRUCT TOK_IDENT TOK_LBRACE member_list TOK_RBRACE TOK_SEMICOLON {
-				printf("struct definition");
+				printf("struct definition\n");
 			}
 			;
 
@@ -54,8 +55,8 @@ member_list: member_decl
 		   | member_list member_decl
 		   ;
 
-member_decl: TOK_U64 TOK_IDENT TOK_SEMICOLON { printf("Member decl\n"); }
-		   | TOK_U8 TOK_IDENT TOK_SEMICOLON {  printf("Member decl\n"); }
+member_decl: TOK_IDENT TOK_U64 TOK_SEMICOLON { printf("Member decl\n"); }
+		   | TOK_IDENT TOK_U8 TOK_SEMICOLON { printf("Member decl\n"); }
 		   ;
 
 %%

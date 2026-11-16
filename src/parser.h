@@ -63,16 +63,17 @@ extern int yydebug;
     TOK_RPAREN = 264,              /* "')'"  */
     TOK_SEMICOLON = 265,           /* "';'"  */
     TOK_ASSIGN = 266,              /* "'='"  */
-    TOK_COLON = 267,               /* "':'"  */
-    TOK_U64 = 268,                 /* "'u64'"  */
-    TOK_I64 = 269,                 /* "'i64'"  */
-    TOK_U32 = 270,                 /* "'u32'"  */
-    TOK_I32 = 271,                 /* "'i32'"  */
-    TOK_U16 = 272,                 /* "'u16'"  */
-    TOK_I16 = 273,                 /* "'i16'"  */
-    TOK_U8 = 274,                  /* "'u8'"  */
-    TOK_I8 = 275,                  /* "'i8'"  */
-    TOK_VOID = 276                 /* "'Void'"  */
+    TOK_ASTERISK = 267,            /* "'*'"  */
+    TOK_COLON = 268,               /* "':'"  */
+    TOK_U64 = 269,                 /* "'u64'"  */
+    TOK_I64 = 270,                 /* "'i64'"  */
+    TOK_U32 = 271,                 /* "'u32'"  */
+    TOK_I32 = 272,                 /* "'i32'"  */
+    TOK_U16 = 273,                 /* "'u16'"  */
+    TOK_I16 = 274,                 /* "'i16'"  */
+    TOK_U8 = 275,                  /* "'u8'"  */
+    TOK_I8 = 276,                  /* "'i8'"  */
+    TOK_VOID = 277                 /* "'Void'"  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -86,7 +87,7 @@ union YYSTYPE
     char *str;
     int num;
 
-#line 90 "src/parser.h"
+#line 91 "src/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
