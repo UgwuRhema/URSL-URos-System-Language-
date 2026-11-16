@@ -30,7 +30,8 @@ extern int yylineno;
 %token TOK_U16 "'u16'"
 %token TOK_I16 "'i16'"
 %token TOK_U8 "'u8'"
-%token TOK_i8 "'i8'"
+%token TOK_I8 "'i8'"
+%token TOK_VOID "'Void'"
 
 %%
 

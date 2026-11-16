@@ -71,7 +71,8 @@ extern int yydebug;
     TOK_U16 = 272,                 /* "'u16'"  */
     TOK_I16 = 273,                 /* "'i16'"  */
     TOK_U8 = 274,                  /* "'u8'"  */
-    TOK_i8 = 275                   /* "'i8'"  */
+    TOK_I8 = 275,                  /* "'i8'"  */
+    TOK_VOID = 276                 /* "'Void'"  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -85,7 +86,7 @@ union YYSTYPE
     char *str;
     int num;
 
-#line 89 "src/parser.h"
+#line 90 "src/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
