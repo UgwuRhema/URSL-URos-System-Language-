@@ -106,7 +106,7 @@ enum yysymbol_kind_t
   YYSYMBOL_YYEOF = 0,                      /* "end of file"  */
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
-  YYSYMBOL_TOK_STRUCT = 3,                 /* "'Struct'"  */
+  YYSYMBOL_TOK_STRUCT = 3,                 /* "'%struc'"  */
   YYSYMBOL_TOK_IDENT = 4,                  /* "'identifier'"  */
   YYSYMBOL_TOK_NUM = 5,                    /* "'number'"  */
   YYSYMBOL_TOK_LBRACE = 6,                 /* "'{'"  */
@@ -458,16 +458,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  6
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   13
+#define YYLAST   20
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  22
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  6
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  9
+#define YYNRULES  10
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  17
+#define YYNSTATES  20
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   276
@@ -518,7 +518,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    38,    38,    42,    43,    44,    48,    53,    54,    57
+       0,    38,    38,    42,    43,    44,    48,    53,    54,    57,
+      58
 };
 #endif
 
@@ -534,7 +535,7 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "\"'Struct'\"",
+  "\"end of file\"", "error", "\"invalid token\"", "\"'%struc'\"",
   "\"'identifier'\"", "\"'number'\"", "\"'{'\"", "\"'}'\"", "\"'('\"",
   "\"')'\"", "\"';'\"", "\"'='\"", "\"':'\"", "\"'u64'\"", "\"'i64'\"",
   "\"'u32'\"", "\"'i32'\"", "\"'u16'\"", "\"'i16'\"", "\"'u8'\"",
@@ -549,7 +550,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-10)
+#define YYPACT_NINF (-13)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -563,8 +564,8 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -2,    -1,     2,    -2,   -10,     1,   -10,   -10,    -9,     4,
-      -7,   -10,    -5,     0,   -10,   -10,   -10
+      -1,     0,     3,    -1,   -13,     2,   -13,   -13,   -12,     1,
+       5,    -7,   -13,     4,     6,     7,   -13,   -13,   -13,   -13
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -573,19 +574,19 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        3,     0,     0,     2,     4,     0,     1,     5,     0,     0,
-       0,     7,     0,     0,     8,     9,     6
+       0,     0,     7,     0,     0,     0,     8,     9,    10,     6
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -10,   -10,   -10,     6,   -10,     3
+     -13,   -13,   -13,     8,   -13,     9
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     3,     4,    10,    11
+       0,     2,     3,     4,    11,    12
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -593,14 +594,16 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      13,     1,     6,     5,     9,    15,     9,     8,    12,     7,
-      16,     0,     0,    14
+      15,     9,     1,     6,     5,    13,     9,    10,     8,    14,
+       0,     7,    10,     0,    17,     0,    18,    19,     0,     0,
+      16
 };
 
 static const yytype_int8 yycheck[] =
 {
-       7,     3,     0,     4,    13,    10,    13,     6,     4,     3,
-      10,    -1,    -1,    10
+       7,    13,     3,     0,     4,     4,    13,    19,     6,     4,
+      -1,     3,    19,    -1,    10,    -1,    10,    10,    -1,    -1,
+      11
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -608,19 +611,21 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     3,    23,    24,    25,     4,     0,    25,     6,    13,
-      26,    27,     4,     7,    27,    10,    10
+      19,    26,    27,     4,     4,     7,    27,    10,    10,    10
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    22,    23,    24,    24,    24,    25,    26,    26,    27
+       0,    22,    23,    24,    24,    24,    25,    26,    26,    27,
+      27
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     0,     1,     2,     6,     1,     2,     3
+       0,     2,     1,     0,     1,     2,     6,     1,     2,     3,
+       3
 };
 
 
@@ -1353,22 +1358,28 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 6: /* struct_defn: "'Struct'" "'identifier'" "'{'" member_list "'}'" "';'"  */
+  case 6: /* struct_defn: "'%struc'" "'identifier'" "'{'" member_list "'}'" "';'"  */
 #line 48 "src/parser.y"
                                                                                   {
 				printf("struct definition");
 			}
-#line 1362 "src/parser.c"
+#line 1367 "src/parser.c"
     break;
 
   case 9: /* member_decl: "'u64'" "'identifier'" "';'"  */
 #line 57 "src/parser.y"
-                                             { printf("Member decl"); }
-#line 1368 "src/parser.c"
+                                             { printf("Member decl\n"); }
+#line 1373 "src/parser.c"
+    break;
+
+  case 10: /* member_decl: "'u8'" "'identifier'" "';'"  */
+#line 58 "src/parser.y"
+                                                    {  printf("Member decl\n"); }
+#line 1379 "src/parser.c"
     break;
 
 
-#line 1372 "src/parser.c"
+#line 1383 "src/parser.c"
 
       default: break;
     }
@@ -1592,7 +1603,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 59 "src/parser.y"
+#line 61 "src/parser.y"
 
 
 void yyerror(const char *str)
@@ -1614,5 +1625,6 @@ int main(int argc, char *argv[])
 		yyin = fd; /*give the file pointer our open file*/
 		return yyparse();
 	}
+	fprintf(stderr, "urslc: fatal: no input files\n");
 	return 1;
 }

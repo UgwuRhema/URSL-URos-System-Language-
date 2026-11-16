@@ -18,7 +18,7 @@
 "u8" { return TOK_U8; }
 "vd" { return TOK_VOID; }
 
-"struc" {
+"%struc" {
 	return TOK_STRUCT;
 }
 

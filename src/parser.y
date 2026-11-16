@@ -13,7 +13,7 @@ extern int yylineno;
     int num;
 }
 
-%token TOK_STRUCT "'Struct'"
+%token TOK_STRUCT "'%struc'"
 %token <str> TOK_IDENT "'identifier'"
 %token <num> TOK_NUM  "'number'"
 %token TOK_LBRACE "'{'" 
@@ -54,7 +54,9 @@ member_list: member_decl
 		   | member_list member_decl
 		   ;
 
-member_decl: TOK_U64 TOK_IDENT TOK_SEMICOLON { printf("Member decl"); }
+member_decl: TOK_U64 TOK_IDENT TOK_SEMICOLON { printf("Member decl\n"); }
+		   | TOK_U8 TOK_IDENT TOK_SEMICOLON {  printf("Member decl\n"); }
+		   ;
 
 %%
 
@@ -77,5 +79,6 @@ int main(int argc, char *argv[])
 		yyin = fd; /*give the file pointer our open file*/
 		return yyparse();
 	}
+	fprintf(stderr, "urslc: fatal: no input files\n");
 	return 1;
 }

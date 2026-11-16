@@ -54,7 +54,7 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    TOK_STRUCT = 258,              /* "'Struct'"  */
+    TOK_STRUCT = 258,              /* "'%struc'"  */
     TOK_IDENT = 259,               /* "'identifier'"  */
     TOK_NUM = 260,                 /* "'number'"  */
     TOK_LBRACE = 261,              /* "'{'"  */

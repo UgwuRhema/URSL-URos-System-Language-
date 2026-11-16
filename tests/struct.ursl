@@ -1,0 +1,4 @@
+%struc Person {
+	u64 age;
+	u8 name;
+};
