@@ -1,9 +1,28 @@
 %{
 #include <stdio.h>
+#include <stdlib.h>
+#include "types.h"
 int yylex(void);
 void yyerror(const char* s);
 extern char *yytext;
 extern int yylineno;
+
+/*primitive spelling*/
+static const char *prim_name(int kind)
+{
+	switch (kind) {
+		case TY_U64: return "u64";
+		case TY_I64: return "i64";
+		case TY_U32: return "u32";
+		case TY_I32: return "i32";
+		case TY_U16: return "u16";
+		case TY_I16: return "i16";
+		case TY_U8:  return "u8";
+		case TY_I8:  return "i8";
+		case TY_VOID: return "vd";
+		default: return "?";
+	}
+}
 %}
 
 %define parse.error verbose
@@ -11,11 +30,13 @@ extern int yylineno;
 %union {
     char *str;
     int num;
+    int kind;
 }
 
 %token TOK_STRUCT "'%struc'"
 %token <str> TOK_IDENT "'identifier'"
 %token <num> TOK_NUM  "'number'"
+%token <kind> TOK_PRIM_TYPE "'primitive type'"
 %token TOK_LBRACE "'{'" 
 %token TOK_RBRACE "'}'"
 %token TOK_LPAREN "'('"
@@ -24,15 +45,8 @@ extern int yylineno;
 %token TOK_ASSIGN "'='"
 %token TOK_ASTERISK "'*'"
 %token TOK_COLON  "':'"
-%token TOK_U64 "'u64'"
-%token TOK_I64 "'i64'"
-%token TOK_U32 "'u32'"
-%token TOK_I32 "'i32'"
-%token TOK_U16 "'u16'"
-%token TOK_I16 "'i16'"
-%token TOK_U8 "'u8'"
-%token TOK_I8 "'i8'"
-%token TOK_VOID "'Void'"
+
+%type <kind> type_specifier
 
 %%
 
@@ -55,9 +69,18 @@ member_list: member_decl
 		   | member_list member_decl
 		   ;
 
-member_decl: TOK_IDENT TOK_U64 TOK_SEMICOLON { printf("Member decl\n"); }
-		   | TOK_IDENT TOK_U8 TOK_SEMICOLON { printf("Member decl\n"); }
-		   ;
+/*one member rule for every type*/
+member_decl: TOK_IDENT type_specifier TOK_SEMICOLON {
+				printf("Member decl: %s: %s\n", $1, prim_name($2));
+				free($1);
+			}
+			;
+
+/*generic type rule*/
+type_specifier: TOK_PRIM_TYPE {
+					$$ = $1;
+				}
+			  ;
 
 %%
 

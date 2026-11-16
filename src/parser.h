@@ -57,23 +57,15 @@ extern int yydebug;
     TOK_STRUCT = 258,              /* "'%struc'"  */
     TOK_IDENT = 259,               /* "'identifier'"  */
     TOK_NUM = 260,                 /* "'number'"  */
-    TOK_LBRACE = 261,              /* "'{'"  */
-    TOK_RBRACE = 262,              /* "'}'"  */
-    TOK_LPAREN = 263,              /* "'('"  */
-    TOK_RPAREN = 264,              /* "')'"  */
-    TOK_SEMICOLON = 265,           /* "';'"  */
-    TOK_ASSIGN = 266,              /* "'='"  */
-    TOK_ASTERISK = 267,            /* "'*'"  */
-    TOK_COLON = 268,               /* "':'"  */
-    TOK_U64 = 269,                 /* "'u64'"  */
-    TOK_I64 = 270,                 /* "'i64'"  */
-    TOK_U32 = 271,                 /* "'u32'"  */
-    TOK_I32 = 272,                 /* "'i32'"  */
-    TOK_U16 = 273,                 /* "'u16'"  */
-    TOK_I16 = 274,                 /* "'i16'"  */
-    TOK_U8 = 275,                  /* "'u8'"  */
-    TOK_I8 = 276,                  /* "'i8'"  */
-    TOK_VOID = 277                 /* "'Void'"  */
+    TOK_PRIM_TYPE = 261,           /* "'primitive type'"  */
+    TOK_LBRACE = 262,              /* "'{'"  */
+    TOK_RBRACE = 263,              /* "'}'"  */
+    TOK_LPAREN = 264,              /* "'('"  */
+    TOK_RPAREN = 265,              /* "')'"  */
+    TOK_SEMICOLON = 266,           /* "';'"  */
+    TOK_ASSIGN = 267,              /* "'='"  */
+    TOK_ASTERISK = 268,            /* "'*'"  */
+    TOK_COLON = 269                /* "':'"  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -82,12 +74,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 11 "src/parser.y"
+#line 30 "src/parser.y"
 
     char *str;
     int num;
+    int kind;
 
-#line 91 "src/parser.h"
+#line 84 "src/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

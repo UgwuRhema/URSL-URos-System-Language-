@@ -403,9 +403,9 @@ static const flex_int16_t yy_accept[48] =
     {   0,
         0,    0,   25,   23,   21,   21,   23,   15,   16,   19,
        23,   11,   20,   17,   18,   12,   12,   12,   12,   13,
-       14,   21,    0,   22,   11,   12,   12,   12,   12,    7,
-       12,   12,   12,    8,    9,    0,   22,    6,    4,    3,
-        5,    2,    1,    0,    0,   10,    0
+       14,   21,    0,   22,   11,   12,   12,   12,   12,    8,
+       12,   12,   12,    7,    9,    0,   22,    6,    4,    2,
+        5,    3,    1,    0,    0,   10,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -518,9 +518,12 @@ char *yytext;
 #line 1 "src/lexer.l"
 #line 2 "src/lexer.l"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "parser.h"
-#line 522 "src/lexer.c"
-#line 523 "src/lexer.c"
+#include "types.h"
+#line 525 "src/lexer.c"
+#line 526 "src/lexer.c"
 
 #define INITIAL 0
 
@@ -737,10 +740,10 @@ YY_DECL
 		}
 
 	{
-#line 9 "src/lexer.l"
+#line 12 "src/lexer.l"
 
 
-#line 743 "src/lexer.c"
+#line 746 "src/lexer.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -809,59 +812,59 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 11 "src/lexer.l"
-{ return TOK_U64; }
+#line 14 "src/lexer.l"
+{ yylval.kind = TY_U64; return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 12 "src/lexer.l"
-{ return TOK_U32; }
+#line 15 "src/lexer.l"
+{ yylval.kind = TY_I64; return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 13 "src/lexer.l"
-{ return TOK_I64; }
+#line 16 "src/lexer.l"
+{ yylval.kind = TY_U32; return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 14 "src/lexer.l"
-{ return TOK_I32; }
+#line 17 "src/lexer.l"
+{ yylval.kind = TY_I32; return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 15 "src/lexer.l"
-{ return TOK_U16; }
+#line 18 "src/lexer.l"
+{ yylval.kind = TY_U16; return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 16 "src/lexer.l"
-{ return TOK_I16; }
+#line 19 "src/lexer.l"
+{ yylval.kind = TY_I16; return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 17 "src/lexer.l"
-{ return TOK_I8; }
+#line 20 "src/lexer.l"
+{ yylval.kind = TY_U8;  return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 18 "src/lexer.l"
-{ return TOK_U8; }
+#line 21 "src/lexer.l"
+{ yylval.kind = TY_I8;  return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 19 "src/lexer.l"
-{ return TOK_VOID; }
+#line 22 "src/lexer.l"
+{ yylval.kind = TY_VOID; return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 21 "src/lexer.l"
+#line 24 "src/lexer.l"
 {
 	return TOK_STRUCT;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 25 "src/lexer.l"
+#line 28 "src/lexer.l"
 {
     yylval.num = atoi(yytext);
     return TOK_NUM;
@@ -869,7 +872,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 29 "src/lexer.l"
+#line 32 "src/lexer.l"
 {
     yylval.str = strdup(yytext);
     return TOK_IDENT;
@@ -877,66 +880,66 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 33 "src/lexer.l"
+#line 36 "src/lexer.l"
 { return TOK_LBRACE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 34 "src/lexer.l"
+#line 37 "src/lexer.l"
 { return TOK_RBRACE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 35 "src/lexer.l"
+#line 38 "src/lexer.l"
 { return TOK_LPAREN; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 36 "src/lexer.l"
+#line 39 "src/lexer.l"
 { return TOK_RPAREN; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 37 "src/lexer.l"
+#line 40 "src/lexer.l"
 { return TOK_SEMICOLON; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 38 "src/lexer.l"
+#line 41 "src/lexer.l"
 { return TOK_ASSIGN; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 39 "src/lexer.l"
+#line 42 "src/lexer.l"
 { return TOK_ASTERISK; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 40 "src/lexer.l"
+#line 43 "src/lexer.l"
 { return TOK_COLON; }
 	YY_BREAK
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
-#line 41 "src/lexer.l"
+#line 44 "src/lexer.l"
 { /* skip whitespace */ }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 42 "src/lexer.l"
+#line 45 "src/lexer.l"
 { /* skip single line comments */ }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 44 "src/lexer.l"
+#line 47 "src/lexer.l"
 { fprintf(stderr, "urslc: fatal: unknown '%s'\n", yytext); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 46 "src/lexer.l"
+#line 49 "src/lexer.l"
 ECHO;
 	YY_BREAK
-#line 939 "src/lexer.c"
+#line 942 "src/lexer.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1953,6 +1956,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 46 "src/lexer.l"
+#line 49 "src/lexer.l"
 
 
