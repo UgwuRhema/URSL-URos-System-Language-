@@ -13,7 +13,7 @@ extern int yylineno;
     int num;
 }
 
-%token STRUCT_TOK "'Struct"
+%token STRUCT_TOK "'Struct'"
 %token <str> TOK_IDENT "'identifier'"
 %token <num> TOK_NUM  "'number'"
 %token TOK_LBRACE "'{'" 
@@ -27,11 +27,23 @@ extern int yylineno;
 %%
 
 program: function_list
-       ;
+	   | metadata_defn_list
+	   ;
 
-function_list: function 
+/*left recursion*/
+function_list: function
              | function_list function
              ;
+metadata_defn_list: %empty
+				  | struct_defn
+				  | metadata_defn_list struct_defn
+				  ;
+
+struct_defn: STRUCT_TOK TOK_IDENT TOK_LBRACE TOK_RBRACE {
+				printf("struct definition");
+			}
+			;
+
 %%
 
 void yyerror(const char *str)
