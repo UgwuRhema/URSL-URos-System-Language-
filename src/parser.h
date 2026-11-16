@@ -54,18 +54,24 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    TOK_U64 = 258,                 /* "'64 bit integer'"  */
-    TOK_VOID = 259,                /* "'void'"  */
-    TOK_ENTRY = 260,               /* "'code entry'"  */
-    TOK_IDENT = 261,               /* "'identifier'"  */
-    TOK_NUM = 262,                 /* "'number'"  */
-    TOK_LBRACE = 263,              /* "'{'"  */
-    TOK_RBRACE = 264,              /* "'}'"  */
-    TOK_LPAREN = 265,              /* "'('"  */
-    TOK_RPAREN = 266,              /* "')'"  */
-    TOK_SEMICOLON = 267,           /* "';'"  */
-    TOK_ASSIGN = 268,              /* "'='"  */
-    TOK_COLON = 269                /* "':'"  */
+    TOK_STRUCT = 258,              /* "'Struct'"  */
+    TOK_IDENT = 259,               /* "'identifier'"  */
+    TOK_NUM = 260,                 /* "'number'"  */
+    TOK_LBRACE = 261,              /* "'{'"  */
+    TOK_RBRACE = 262,              /* "'}'"  */
+    TOK_LPAREN = 263,              /* "'('"  */
+    TOK_RPAREN = 264,              /* "')'"  */
+    TOK_SEMICOLON = 265,           /* "';'"  */
+    TOK_ASSIGN = 266,              /* "'='"  */
+    TOK_COLON = 267,               /* "':'"  */
+    TOK_U64 = 268,                 /* "'u64'"  */
+    TOK_I64 = 269,                 /* "'i64'"  */
+    TOK_U32 = 270,                 /* "'u32'"  */
+    TOK_I32 = 271,                 /* "'i32'"  */
+    TOK_U16 = 272,                 /* "'u16'"  */
+    TOK_I16 = 273,                 /* "'i16'"  */
+    TOK_U8 = 274,                  /* "'u8'"  */
+    TOK_i8 = 275                   /* "'i8'"  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -79,7 +85,7 @@ union YYSTYPE
     char *str;
     int num;
 
-#line 83 "src/parser.h"
+#line 89 "src/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -34,22 +34,17 @@ extern int yylineno;
 
 %%
 
-program: function_list
-	   | metadata_defn_list
+program: metadata_defn_list
 	   ;
 
-/*left recursion*/
-function_list: function
-             | function_list function
-             ;
-
+/*left recursive CFG*/
 metadata_defn_list: %empty
 				  | struct_defn
 				  | metadata_defn_list struct_defn
 				  ;
 
 /*struct defn nonterminal*/
-struct_defn: STRUCT_TOK TOK_IDENT TOK_LBRACE member_list TOK_RBRACE {
+struct_defn: TOK_STRUCT TOK_IDENT TOK_LBRACE member_list TOK_RBRACE {
 				printf("struct definition");
 			}
 			;
