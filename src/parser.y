@@ -44,7 +44,7 @@ metadata_defn_list: %empty
 				  ;
 
 /*struct defn nonterminal*/
-struct_defn: TOK_STRUCT TOK_IDENT TOK_LBRACE member_list TOK_RBRACE {
+struct_defn: TOK_STRUCT TOK_IDENT TOK_LBRACE member_list TOK_RBRACE TOK_SEMICOLON {
 				printf("struct definition");
 			}
 			;

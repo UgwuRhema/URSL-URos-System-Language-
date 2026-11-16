@@ -9,12 +9,13 @@ LEX_OUT := src/lexer.c
 PAR := src/parser.y
 PAR_OUT := src/parser.c
 
-SRC := src/main.c
 OUT := ./urslc
 
 # for now!
-all: $(SRC)
-	$(C) $(CFLAGS) -o $(OUT) $(SRC) -lfl
+all:
+	$(MAKE) flex
+	$(MAKE) bison
+	$(C) $(CFLAGS) -o $(OUT) $(LEX_OUT) $(PAR_OUT) -lfl
 
 flex: $(LEX)
 	$(FLX) -o $(LEX_OUT) $(LEX)
@@ -22,8 +23,6 @@ flex: $(LEX)
 bison: $(PAR)
 	$(BIS) -d -o $(PAR_OUT) $(PAR)
 
-fbin: $(PAR_OUT) $(LEX_OUT)
-	$(C) $(CFLAGS) $(PAR_OUT) $(LEX_OUT) -o $(OUT) -lfl
 run:
 	$(OUT)
 

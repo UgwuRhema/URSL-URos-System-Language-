@@ -457,7 +457,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  6
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   10
+#define YYLAST   13
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  21
@@ -466,7 +466,7 @@ union yyalloc
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  9
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  16
+#define YYNSTATES  17
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   275
@@ -563,7 +563,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 static const yytype_int8 yypact[] =
 {
       -2,    -1,     2,    -2,   -10,     1,   -10,   -10,    -9,     4,
-      -7,   -10,    -5,   -10,   -10,   -10
+      -7,   -10,    -5,     0,   -10,   -10,   -10
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -572,13 +572,13 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        3,     0,     0,     2,     4,     0,     1,     5,     0,     0,
-       0,     7,     0,     6,     8,     9
+       0,     7,     0,     0,     8,     9,     6
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -10,   -10,   -10,     6,   -10,     0
+     -10,   -10,   -10,     6,   -10,     3
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -593,13 +593,13 @@ static const yytype_int8 yydefgoto[] =
 static const yytype_int8 yytable[] =
 {
       13,     1,     6,     5,     9,    15,     9,     8,    12,     7,
-      14
+      16,     0,     0,    14
 };
 
 static const yytype_int8 yycheck[] =
 {
        7,     3,     0,     4,    13,    10,    13,     6,     4,     3,
-      10
+      10,    -1,    -1,    10
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -607,7 +607,7 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     3,    22,    23,    24,     4,     0,    24,     6,    13,
-      25,    26,     4,     7,    26,    10
+      25,    26,     4,     7,    26,    10,    10
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
@@ -619,7 +619,7 @@ static const yytype_int8 yyr1[] =
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     0,     1,     2,     5,     1,     2,     3
+       0,     2,     1,     0,     1,     2,     6,     1,     2,     3
 };
 
 
@@ -1352,9 +1352,9 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 6: /* struct_defn: "'Struct'" "'identifier'" "'{'" member_list "'}'"  */
+  case 6: /* struct_defn: "'Struct'" "'identifier'" "'{'" member_list "'}'" "';'"  */
 #line 47 "src/parser.y"
-                                                                    {
+                                                                                  {
 				printf("struct definition");
 			}
 #line 1361 "src/parser.c"

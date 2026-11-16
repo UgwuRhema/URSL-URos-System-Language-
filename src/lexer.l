@@ -8,7 +8,6 @@
 
 %%
 
-/*let's define primitive types here*/
 "u64" { return TOK_U64; }
 "u32" { return TOK_U32; }
 "i64" { return TOK_I64; }
