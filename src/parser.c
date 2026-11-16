@@ -1599,3 +1599,20 @@ void yyerror(const char *str)
 {
     fprintf(stderr, "urslcc: fatal: line %d: %s near '%s'\n", yylineno, str, yytext);
 }
+
+/*let's test it out*/
+extern FILE *yyin;
+int main(int argc, char *argv[])
+{
+	if (argc > 1)
+	{
+		FILE *fd = fopen(argv[1], "r");
+		if (!fd) { 
+			fprintf(stderr, "urlsc: fatal: couldn't open file '%s'\n", argv[1]); 
+			return 1;
+		}
+		yyin = fd; /*give the file pointer our open file*/
+		return yyparse();
+	}
+	return 1;
+}
