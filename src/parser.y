@@ -13,7 +13,7 @@ extern int yylineno;
     int num;
 }
 
-%token STRUCT_TOK "'Struct'"
+%token TOK_STRUCT "'Struct'"
 %token <str> TOK_IDENT "'identifier'"
 %token <num> TOK_NUM  "'number'"
 %token TOK_LBRACE "'{'" 
@@ -34,15 +34,23 @@ program: function_list
 function_list: function
              | function_list function
              ;
+
 metadata_defn_list: %empty
 				  | struct_defn
 				  | metadata_defn_list struct_defn
 				  ;
 
-struct_defn: STRUCT_TOK TOK_IDENT TOK_LBRACE TOK_RBRACE {
+/*struct defn nonterminal*/
+struct_defn: STRUCT_TOK TOK_IDENT TOK_LBRACE member_list TOK_RBRACE {
 				printf("struct definition");
 			}
 			;
+
+member_list: member_decl
+		   | member_list member_decl
+		   ;
+
+member_decl: 
 
 %%
 
