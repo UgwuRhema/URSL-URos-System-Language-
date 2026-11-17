@@ -455,16 +455,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  3
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   10
+#define YYLAST   12
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  16
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  7
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  10
+#define YYNRULES  11
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  17
+#define YYNSTATES  18
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   270
@@ -515,8 +515,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    45,    45,    49,    50,    54,    59,    60,    65,    73,
-      77
+       0,    45,    45,    49,    50,    54,    58,    59,    64,    69,
+      73,    78
 };
 #endif
 
@@ -546,7 +546,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-5)
+#define YYPACT_NINF (-7)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -560,8 +560,8 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -5,     2,     3,    -5,     1,    -5,     0,    -5,    -4,    -3,
-      -2,    -5,    -5,    -5,    -1,    -5,    -5
+      -7,     2,     3,    -7,     4,    -7,     5,    -7,    -4,    -3,
+      -2,    -7,    -7,    -7,    -6,    -7,    -7,    -7
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -570,13 +570,13 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        3,     0,     2,     1,     0,     4,     0,     6,     0,     0,
-       0,     7,    10,     9,     0,     5,     8
+       0,     7,    10,     9,     0,     5,     8,    11
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -5,    -5,    -5,    -5,    -5,    -5,    -5
+      -7,    -7,    -7,    -7,    -7,    -7,    -7
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -590,14 +590,14 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       9,    12,     3,    13,    10,     6,     4,     7,     0,    15,
-      16
+       9,    12,     3,    13,    10,    16,     4,    17,     6,    15,
+       0,     0,     7
 };
 
 static const yytype_int8 yycheck[] =
 {
-       4,     4,     0,     6,     8,     4,     3,     7,    -1,    11,
-      11
+       4,     4,     0,     6,     8,    11,     3,    13,     4,    11,
+      -1,    -1,     7
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -605,21 +605,21 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,    17,    18,     0,     3,    19,     4,     7,    20,     4,
-       8,    21,     4,     6,    22,    11,    11
+       8,    21,     4,     6,    22,    11,    11,    13
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
        0,    16,    17,    18,    18,    19,    20,    20,    21,    22,
-      22
+      22,    22
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     0,     2,     6,     0,     2,     3,     1,
-       1
+       1,     2
 };
 
 
@@ -1355,40 +1355,45 @@ yyreduce:
   case 5: /* struct_defn: "'%struc'" "'identifier'" "'{'" member_list "'}'" "';'"  */
 #line 54 "src/parser.y"
                                                                                   {
-				free((yyvsp[-4].str)); /*TODO: store struct definition*/
 			}
-#line 1361 "src/parser.c"
+#line 1360 "src/parser.c"
     break;
 
   case 8: /* member_decl: "'identifier'" type_specifier "';'"  */
-#line 65 "src/parser.y"
+#line 64 "src/parser.y"
                                                     {
-				free((yyvsp[-2].str));      /*TODO: store member name*/
-				free((yyvsp[-1].type).name); /*TODO: store member type*/
 			}
-#line 1370 "src/parser.c"
+#line 1367 "src/parser.c"
     break;
 
   case 9: /* type_specifier: "'primitive type'"  */
-#line 73 "src/parser.y"
+#line 69 "src/parser.y"
                               {
-					(yyval.type).kind = (TypeKind)(yyvsp[0].kind); /*$1 is the lexer kind*/
+					(yyval.type).kind = (enum type_kind_t)(yyvsp[0].kind); /*$1 is the lexer kind*/
 					(yyval.type).name = NULL;
 				}
-#line 1379 "src/parser.c"
+#line 1376 "src/parser.c"
     break;
 
   case 10: /* type_specifier: "'identifier'"  */
-#line 77 "src/parser.y"
+#line 73 "src/parser.y"
                                       {
-					(yyval.type).kind = TY_NAMED; /*TODO: semantic pass checks it*/
+					(yyval.type).kind = TY_NAMED;
 					(yyval.type).name = (yyvsp[0].str);
 				}
-#line 1388 "src/parser.c"
+#line 1385 "src/parser.c"
+    break;
+
+  case 11: /* type_specifier: type_specifier "'*'"  */
+#line 78 "src/parser.y"
+                                                            {
+					(yyval.type) = (yyvsp[-1].type);
+				}
+#line 1393 "src/parser.c"
     break;
 
 
-#line 1392 "src/parser.c"
+#line 1397 "src/parser.c"
 
       default: break;
     }

@@ -19,7 +19,7 @@ extern int yylineno;
     char *str;    /* TOK_IDENT text */
     double num;      /* TOK_NUM value */
     int kind;     /* TOK_PRIM_TYPE kind */
-    TypeRef type; /* type_specifier result */
+    struct type_ref_t type; /* type_specifier result */
 }
 
 %token TOK_STRUCT "'%struc'"
@@ -52,7 +52,6 @@ top_level_list: %empty
 
 /*struct defn nonterminal*/
 struct_defn: TOK_STRUCT TOK_IDENT TOK_LBRACE member_list TOK_RBRACE TOK_SEMICOLON {
-				free($2); /*TODO: store struct definition*/
 			}
 			;
 
@@ -63,20 +62,21 @@ member_list: %empty
 /*TODO: build AST instead of freeing*/
 /*one member rule for every type*/
 member_decl: TOK_IDENT type_specifier TOK_SEMICOLON {
-				free($1);      /*TODO: store member name*/
-				free($2.name); /*TODO: store member type*/
 			}
 			;
 
-/*TODO: add pointers: type_specifier TOK_ASTERISK*/
 /*generic type rule*/
 type_specifier: TOK_PRIM_TYPE {
-					$$.kind = (TypeKind)$1; /*$1 is the lexer kind*/
+					$$.kind = (enum type_kind_t)$1; /*$1 is the lexer kind*/
 					$$.name = NULL;
 				}
 			  | TOK_IDENT {
-					$$.kind = TY_NAMED; /*TODO: semantic pass checks it*/
+					$$.kind = TY_NAMED;
 					$$.name = $1;
+				}
+				/*pointer?*/
+			  |	type_specifier TOK_ASTERISK {
+					$$ = $1;
 				}
 			  ;
 

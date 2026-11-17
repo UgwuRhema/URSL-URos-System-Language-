@@ -86,7 +86,7 @@ union YYSTYPE
     char *str;    /* TOK_IDENT text */
     double num;      /* TOK_NUM value */
     int kind;     /* TOK_PRIM_TYPE kind */
-    TypeRef type; /* type_specifier result */
+    struct type_ref_t type; /* type_specifier result */
 
 #line 92 "src/parser.h"
 
