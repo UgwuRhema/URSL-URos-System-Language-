@@ -17,7 +17,7 @@ extern int yylineno;
 /*token and rule values*/
 %union {
     char *str;    /* TOK_IDENT text */
-    long num;      /* TOK_NUM value */
+    double num;      /* TOK_NUM value */
     int kind;     /* TOK_PRIM_TYPE kind */
     TypeRef type; /* type_specifier result */
 }

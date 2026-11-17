@@ -4,11 +4,8 @@
 #include <string.h>
 #include "parser.h" /*token codes and yylval*/
 #include "types.h" /*TY_* kind tags*/
-
 /*one token for every primitive*/
 /*yylval.kind says which primitive*/
-/*TODO: unknown chars should return an error token*/
-/*TODO: atoi is too small for big numbers*/
 %}
 
 %option noyywrap
@@ -30,8 +27,8 @@
 	return TOK_STRUCT;
 }
 
-[0-9]+ {
-    yylval.num = atol(yytext);
+"-"?[0-9]+("."[0-9]+)? {
+    yylval.num = atof(yytext);
     return TOK_NUM;
 }
 [a-zA-Z_][a-zA-Z0-9_]* {
