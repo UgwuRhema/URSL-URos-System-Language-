@@ -13,6 +13,7 @@ enum type_kind_t {
 struct type_ref_t {
 	enum type_kind_t kind;  /* primitive kind or TY_NAMED */
 	char *name;     /* struct name when kind is TY_NAMED */
+	unsigned int pointer_depth;
 };
 
 #endif

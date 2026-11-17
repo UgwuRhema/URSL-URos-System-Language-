@@ -77,6 +77,7 @@ type_specifier: TOK_PRIM_TYPE {
 				/*pointer?*/
 			  |	type_specifier TOK_ASTERISK {
 					$$ = $1;
+					++$$.pointer_depth;/*increase my number of pointers*/
 				}
 			  ;
 

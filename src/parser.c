@@ -1388,12 +1388,13 @@ yyreduce:
 #line 78 "src/parser.y"
                                                             {
 					(yyval.type) = (yyvsp[-1].type);
+					++(yyval.type).pointer_depth;/*increase my number of pointers*/
 				}
-#line 1393 "src/parser.c"
+#line 1394 "src/parser.c"
     break;
 
 
-#line 1397 "src/parser.c"
+#line 1398 "src/parser.c"
 
       default: break;
     }
@@ -1617,7 +1618,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 83 "src/parser.y"
+#line 84 "src/parser.y"
 
 
 void yyerror(const char *str)
