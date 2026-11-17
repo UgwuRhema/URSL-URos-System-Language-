@@ -1,4 +1,5 @@
 %struc Person {
 	age u64;
 	name u8;
+	filename u8;
 };

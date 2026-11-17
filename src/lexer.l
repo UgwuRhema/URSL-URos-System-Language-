@@ -2,8 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "parser.h"
-#include "types.h"
+#include "parser.h" /*token codes and yylval*/
+#include "types.h" /*TY_* kind tags*/
+
+/*one token for every primitive*/
+/*yylval.kind says which primitive*/
+/*TODO: unknown chars should return an error token*/
+/*TODO: atoi is too small for big numbers*/
 %}
 
 %option noyywrap
@@ -26,7 +31,7 @@
 }
 
 [0-9]+ {
-    yylval.num = atoi(yytext);
+    yylval.num = atol(yytext);
     return TOK_NUM;
 }
 [a-zA-Z_][a-zA-Z0-9_]* {
@@ -44,6 +49,6 @@
 [ \t\r\n]+ { /* skip whitespace */ }
 "//".* { /* skip single line comments */ }
 
-. { fprintf(stderr, "urslc: fatal: unknown '%s'\n", yytext); }
+. { fprintf(stderr, "urslc: fatal: unknown '%s'\n", yytext); return TOK_ERROR; }
 
 %%

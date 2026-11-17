@@ -67,34 +67,17 @@
 
 
 /* First part of user prologue.  */
-#line 1 "src/parser.y"
+#line 5 "src/parser.y"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "types.h"
+#include "types.h" /*type kinds and TypeRef*/
 int yylex(void);
 void yyerror(const char* s);
 extern char *yytext;
 extern int yylineno;
 
-/*primitive spelling*/
-static const char *prim_name(int kind)
-{
-	switch (kind) {
-		case TY_U64: return "u64";
-		case TY_I64: return "i64";
-		case TY_U32: return "u32";
-		case TY_I32: return "i32";
-		case TY_U16: return "u16";
-		case TY_I16: return "i16";
-		case TY_U8:  return "u8";
-		case TY_I8:  return "i8";
-		case TY_VOID: return "vd";
-		default: return "?";
-	}
-}
-
-#line 98 "src/parser.c"
+#line 81 "src/parser.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -137,13 +120,14 @@ enum yysymbol_kind_t
   YYSYMBOL_TOK_ASSIGN = 12,                /* "'='"  */
   YYSYMBOL_TOK_ASTERISK = 13,              /* "'*'"  */
   YYSYMBOL_TOK_COLON = 14,                 /* "':'"  */
-  YYSYMBOL_YYACCEPT = 15,                  /* $accept  */
-  YYSYMBOL_program = 16,                   /* program  */
-  YYSYMBOL_metadata_defn_list = 17,        /* metadata_defn_list  */
-  YYSYMBOL_struct_defn = 18,               /* struct_defn  */
-  YYSYMBOL_member_list = 19,               /* member_list  */
-  YYSYMBOL_member_decl = 20,               /* member_decl  */
-  YYSYMBOL_type_specifier = 21             /* type_specifier  */
+  YYSYMBOL_TOK_ERROR = 15,                 /* "'err'"  */
+  YYSYMBOL_YYACCEPT = 16,                  /* $accept  */
+  YYSYMBOL_program = 17,                   /* program  */
+  YYSYMBOL_top_level_list = 18,            /* top_level_list  */
+  YYSYMBOL_struct_defn = 19,               /* struct_defn  */
+  YYSYMBOL_member_list = 20,               /* member_list  */
+  YYSYMBOL_member_decl = 21,               /* member_decl  */
+  YYSYMBOL_type_specifier = 22             /* type_specifier  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -469,21 +453,21 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  6
+#define YYFINAL  3
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   14
+#define YYLAST   10
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  15
+#define YYNTOKENS  16
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  7
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  10
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  18
+#define YYNSTATES  17
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   269
+#define YYMAXUTOK   270
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -523,15 +507,16 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11,    12,    13,    14
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    53,    53,    57,    58,    59,    63,    68,    69,    73,
-      80
+       0,    45,    45,    49,    50,    54,    59,    60,    65,    73,
+      77
 };
 #endif
 
@@ -550,8 +535,8 @@ static const char *const yytname[] =
   "\"end of file\"", "error", "\"invalid token\"", "\"'%struc'\"",
   "\"'identifier'\"", "\"'number'\"", "\"'primitive type'\"", "\"'{'\"",
   "\"'}'\"", "\"'('\"", "\"')'\"", "\"';'\"", "\"'='\"", "\"'*'\"",
-  "\"':'\"", "$accept", "program", "metadata_defn_list", "struct_defn",
-  "member_list", "member_decl", "type_specifier", YY_NULLPTR
+  "\"':'\"", "\"'err'\"", "$accept", "program", "top_level_list",
+  "struct_defn", "member_list", "member_decl", "type_specifier", YY_NULLPTR
 };
 
 static const char *
@@ -561,7 +546,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-6)
+#define YYPACT_NINF (-5)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -575,8 +560,8 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -2,    -1,     2,    -2,    -6,     0,    -6,    -6,     1,     3,
-      -4,    -6,    -6,    -5,    -3,    -6,    -6,    -6
+      -5,     2,     3,    -5,     1,    -5,     0,    -5,    -4,    -3,
+      -2,    -5,    -5,    -5,    -1,    -5,    -5
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -584,20 +569,20 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       3,     0,     0,     2,     4,     0,     1,     5,     0,     0,
-       0,     7,    10,     0,     0,     8,     9,     6
+       3,     0,     2,     1,     0,     4,     0,     6,     0,     0,
+       0,     7,    10,     9,     0,     5,     8
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -6,    -6,    -6,     7,    -6,     4,    -6
+      -5,    -5,    -5,    -5,    -5,    -5,    -5
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     3,     4,    10,    11,    13
+       0,     1,     2,     5,     8,    11,    14
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -605,35 +590,35 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       9,     1,     6,     5,    14,     9,    16,     8,    17,    12,
-       7,     0,     0,     0,    15
+       9,    12,     3,    13,    10,     6,     4,     7,     0,    15,
+      16
 };
 
 static const yytype_int8 yycheck[] =
 {
-       4,     3,     0,     4,     8,     4,    11,     7,    11,     6,
-       3,    -1,    -1,    -1,    10
+       4,     4,     0,     6,     8,     4,     3,     7,    -1,    11,
+      11
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,    16,    17,    18,     4,     0,    18,     7,     4,
-      19,    20,     6,    21,     8,    20,    11,    11
+       0,    17,    18,     0,     3,    19,     4,     7,    20,     4,
+       8,    21,     4,     6,    22,    11,    11
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    15,    16,    17,    17,    17,    18,    19,    19,    20,
-      21
+       0,    16,    17,    18,    18,    19,    20,    20,    21,    22,
+      22
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     0,     1,     2,     6,     1,     2,     3,
+       0,     2,     1,     0,     2,     6,     0,     2,     3,     1,
        1
 };
 
@@ -1367,33 +1352,43 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 6: /* struct_defn: "'%struc'" "'identifier'" "'{'" member_list "'}'" "';'"  */
-#line 63 "src/parser.y"
+  case 5: /* struct_defn: "'%struc'" "'identifier'" "'{'" member_list "'}'" "';'"  */
+#line 54 "src/parser.y"
                                                                                   {
-				printf("struct definition\n");
+				free((yyvsp[-4].str)); /*TODO: store struct definition*/
 			}
-#line 1376 "src/parser.c"
+#line 1361 "src/parser.c"
     break;
 
-  case 9: /* member_decl: "'identifier'" type_specifier "';'"  */
-#line 73 "src/parser.y"
+  case 8: /* member_decl: "'identifier'" type_specifier "';'"  */
+#line 65 "src/parser.y"
                                                     {
-				printf("Member decl: %s: %s\n", (yyvsp[-2].str), prim_name((yyvsp[-1].kind)));
-				free((yyvsp[-2].str));
+				free((yyvsp[-2].str));      /*TODO: store member name*/
+				free((yyvsp[-1].type).name); /*TODO: store member type*/
 			}
-#line 1385 "src/parser.c"
+#line 1370 "src/parser.c"
     break;
 
-  case 10: /* type_specifier: "'primitive type'"  */
-#line 80 "src/parser.y"
+  case 9: /* type_specifier: "'primitive type'"  */
+#line 73 "src/parser.y"
                               {
-					(yyval.kind) = (yyvsp[0].kind);
+					(yyval.type).kind = (TypeKind)(yyvsp[0].kind); /*$1 is the lexer kind*/
+					(yyval.type).name = NULL;
 				}
-#line 1393 "src/parser.c"
+#line 1379 "src/parser.c"
+    break;
+
+  case 10: /* type_specifier: "'identifier'"  */
+#line 77 "src/parser.y"
+                                      {
+					(yyval.type).kind = TY_NAMED; /*TODO: semantic pass checks it*/
+					(yyval.type).name = (yyvsp[0].str);
+				}
+#line 1388 "src/parser.c"
     break;
 
 
-#line 1397 "src/parser.c"
+#line 1392 "src/parser.c"
 
       default: break;
     }
@@ -1617,7 +1612,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 85 "src/parser.y"
+#line 83 "src/parser.y"
 
 
 void yyerror(const char *str)

@@ -520,10 +520,15 @@ char *yytext;
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "parser.h"
-#include "types.h"
-#line 525 "src/lexer.c"
-#line 526 "src/lexer.c"
+#include "parser.h" /*token codes and yylval*/
+#include "types.h" /*TY_* kind tags*/
+
+/*one token for every primitive*/
+/*yylval.kind says which primitive*/
+/*TODO: unknown chars should return an error token*/
+/*TODO: atoi is too small for big numbers*/
+#line 530 "src/lexer.c"
+#line 531 "src/lexer.c"
 
 #define INITIAL 0
 
@@ -740,10 +745,10 @@ YY_DECL
 		}
 
 	{
-#line 12 "src/lexer.l"
+#line 17 "src/lexer.l"
 
 
-#line 746 "src/lexer.c"
+#line 751 "src/lexer.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -812,67 +817,67 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 14 "src/lexer.l"
+#line 19 "src/lexer.l"
 { yylval.kind = TY_U64; return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 15 "src/lexer.l"
+#line 20 "src/lexer.l"
 { yylval.kind = TY_I64; return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 16 "src/lexer.l"
+#line 21 "src/lexer.l"
 { yylval.kind = TY_U32; return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 17 "src/lexer.l"
+#line 22 "src/lexer.l"
 { yylval.kind = TY_I32; return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 18 "src/lexer.l"
+#line 23 "src/lexer.l"
 { yylval.kind = TY_U16; return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 19 "src/lexer.l"
+#line 24 "src/lexer.l"
 { yylval.kind = TY_I16; return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 20 "src/lexer.l"
+#line 25 "src/lexer.l"
 { yylval.kind = TY_U8;  return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 21 "src/lexer.l"
+#line 26 "src/lexer.l"
 { yylval.kind = TY_I8;  return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 22 "src/lexer.l"
+#line 27 "src/lexer.l"
 { yylval.kind = TY_VOID; return TOK_PRIM_TYPE; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 24 "src/lexer.l"
+#line 29 "src/lexer.l"
 {
 	return TOK_STRUCT;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 28 "src/lexer.l"
+#line 33 "src/lexer.l"
 {
-    yylval.num = atoi(yytext);
+    yylval.num = atol(yytext);
     return TOK_NUM;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 32 "src/lexer.l"
+#line 37 "src/lexer.l"
 {
     yylval.str = strdup(yytext);
     return TOK_IDENT;
@@ -880,66 +885,66 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 36 "src/lexer.l"
+#line 41 "src/lexer.l"
 { return TOK_LBRACE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 37 "src/lexer.l"
+#line 42 "src/lexer.l"
 { return TOK_RBRACE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 38 "src/lexer.l"
+#line 43 "src/lexer.l"
 { return TOK_LPAREN; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 39 "src/lexer.l"
+#line 44 "src/lexer.l"
 { return TOK_RPAREN; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 40 "src/lexer.l"
+#line 45 "src/lexer.l"
 { return TOK_SEMICOLON; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 41 "src/lexer.l"
+#line 46 "src/lexer.l"
 { return TOK_ASSIGN; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 42 "src/lexer.l"
+#line 47 "src/lexer.l"
 { return TOK_ASTERISK; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 43 "src/lexer.l"
+#line 48 "src/lexer.l"
 { return TOK_COLON; }
 	YY_BREAK
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
-#line 44 "src/lexer.l"
+#line 49 "src/lexer.l"
 { /* skip whitespace */ }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 45 "src/lexer.l"
+#line 50 "src/lexer.l"
 { /* skip single line comments */ }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 47 "src/lexer.l"
-{ fprintf(stderr, "urslc: fatal: unknown '%s'\n", yytext); }
+#line 52 "src/lexer.l"
+{ fprintf(stderr, "urslc: fatal: unknown '%s'\n", yytext); return TOK_ERROR; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 49 "src/lexer.l"
+#line 54 "src/lexer.l"
 ECHO;
 	YY_BREAK
-#line 942 "src/lexer.c"
+#line 947 "src/lexer.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1956,6 +1961,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 49 "src/lexer.l"
+#line 54 "src/lexer.l"
 
 

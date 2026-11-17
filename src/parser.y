@@ -1,41 +1,31 @@
+%code requires {
+#include "types.h" /*parser.h needs TypeRef*/
+}
+
 %{
 #include <stdio.h>
 #include <stdlib.h>
-#include "types.h"
+#include "types.h" /*type kinds and TypeRef*/
 int yylex(void);
 void yyerror(const char* s);
 extern char *yytext;
 extern int yylineno;
-
-/*primitive spelling*/
-static const char *prim_name(int kind)
-{
-	switch (kind) {
-		case TY_U64: return "u64";
-		case TY_I64: return "i64";
-		case TY_U32: return "u32";
-		case TY_I32: return "i32";
-		case TY_U16: return "u16";
-		case TY_I16: return "i16";
-		case TY_U8:  return "u8";
-		case TY_I8:  return "i8";
-		case TY_VOID: return "vd";
-		default: return "?";
-	}
-}
 %}
 
 %define parse.error verbose
 
+/*token and rule values*/
 %union {
-    char *str;
-    int num;
-    int kind;
+    char *str;    /* TOK_IDENT text */
+    long num;      /* TOK_NUM value */
+    int kind;     /* TOK_PRIM_TYPE kind */
+    TypeRef type; /* type_specifier result */
 }
 
 %token TOK_STRUCT "'%struc'"
 %token <str> TOK_IDENT "'identifier'"
 %token <num> TOK_NUM  "'number'"
+/*one terminal for all primitives*/
 %token <kind> TOK_PRIM_TYPE "'primitive type'"
 %token TOK_LBRACE "'{'" 
 %token TOK_RBRACE "'}'"
@@ -45,40 +35,48 @@ static const char *prim_name(int kind)
 %token TOK_ASSIGN "'='"
 %token TOK_ASTERISK "'*'"
 %token TOK_COLON  "':'"
+%token TOK_ERROR "'err'"
 
-%type <kind> type_specifier
+/*type_specifier carries a TypeRef*/
+%type <type> type_specifier
 
 %%
 
-program: metadata_defn_list
+program: top_level_list
 	   ;
 
-/*left recursive CFG*/
-metadata_defn_list: %empty
-				  | struct_defn
-				  | metadata_defn_list struct_defn
-				  ;
+/*left recursive CFG, grows by one struct*/
+top_level_list: %empty
+				| top_level_list struct_defn
+				;
 
 /*struct defn nonterminal*/
 struct_defn: TOK_STRUCT TOK_IDENT TOK_LBRACE member_list TOK_RBRACE TOK_SEMICOLON {
-				printf("struct definition\n");
+				free($2); /*TODO: store struct definition*/
 			}
 			;
 
-member_list: member_decl
+member_list: %empty
 		   | member_list member_decl
 		   ;
 
+/*TODO: build AST instead of freeing*/
 /*one member rule for every type*/
 member_decl: TOK_IDENT type_specifier TOK_SEMICOLON {
-				printf("Member decl: %s: %s\n", $1, prim_name($2));
-				free($1);
+				free($1);      /*TODO: store member name*/
+				free($2.name); /*TODO: store member type*/
 			}
 			;
 
+/*TODO: add pointers: type_specifier TOK_ASTERISK*/
 /*generic type rule*/
 type_specifier: TOK_PRIM_TYPE {
-					$$ = $1;
+					$$.kind = (TypeKind)$1; /*$1 is the lexer kind*/
+					$$.name = NULL;
+				}
+			  | TOK_IDENT {
+					$$.kind = TY_NAMED; /*TODO: semantic pass checks it*/
+					$$.name = $1;
 				}
 			  ;
 

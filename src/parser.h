@@ -44,6 +44,12 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 1 "src/parser.y"
+
+#include "types.h" /*parser.h needs TypeRef*/
+
+#line 53 "src/parser.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -65,7 +71,8 @@ extern int yydebug;
     TOK_SEMICOLON = 266,           /* "';'"  */
     TOK_ASSIGN = 267,              /* "'='"  */
     TOK_ASTERISK = 268,            /* "'*'"  */
-    TOK_COLON = 269                /* "':'"  */
+    TOK_COLON = 269,               /* "':'"  */
+    TOK_ERROR = 270                /* "'err'"  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -74,13 +81,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 30 "src/parser.y"
+#line 18 "src/parser.y"
 
-    char *str;
-    int num;
-    int kind;
+    char *str;    /* TOK_IDENT text */
+    long num;      /* TOK_NUM value */
+    int kind;     /* TOK_PRIM_TYPE kind */
+    TypeRef type; /* type_specifier result */
 
-#line 84 "src/parser.h"
+#line 92 "src/parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
